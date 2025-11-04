@@ -6,14 +6,17 @@ plugins {
 
 android {
     namespace = "com.example.practisrmd"
-    compileSdk {
-        version = release(36)
+    compileSdk = 36 // ✅ valid integer (not release(36))
+
+
+    buildFeatures {
+        viewBinding = true
     }
 
     defaultConfig {
         applicationId = "com.example.practisrmd"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -29,10 +32,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -47,19 +52,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // ✅ Room
     ksp("androidx.room:room-compiler:2.8.3")
     implementation("androidx.room:room-runtime:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
 
-    val lifecycle_version = "1"
-
-
-    // ViewModel
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // ViewModel utilities for Compose
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-    // LiveData
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    // Lifecycles only (without ViewModel or LiveData)
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    // ✅ Lifecycle components (use latest stable version)
+    val lifecycle_version = "2.8.6"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
 }
